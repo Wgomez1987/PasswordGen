@@ -85,6 +85,13 @@ var upperCasedCharacters = [
 ];
 var numericCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
+function getRandom(arr) {
+  var randIndex = Math.floor(Math.random() * arr.length);
+  var randElement = arr[randIndex];
+  return randElement;
+
+}
+
 
 function getUserPasswordOptions() {
 
@@ -100,7 +107,7 @@ function getUserPasswordOptions() {
     lowerCaseChars: hasLowerCaseLetters,
     numberChars: hasNumbers,
     length: passwordLength
-  
+
   }
   return pwdOptions
 }
@@ -108,6 +115,50 @@ function getUserPasswordOptions() {
 function generatePassword() {
   var optionsObj = getUserPasswordOptions()
   console.log(optionsObj.specialChars)
+  var passwordResult = []
+  var possibleChars = []
+  var guaranteedChars = []
+
+  if (optionsObj.specialChars) {
+
+    possibleChars = possibleChars.concat(specialCharacters)
+    guaranteedChars.push(getRandom(specialCharacters))
+
+  }
+
+  if (optionsObj.upperCaseChars) {
+
+    possibleChars = possibleChars.concat(upperCasedCharacters)
+    guaranteedChars.push(getRandom(upperCasedCharacters))
+
+  }
+
+  if (optionsObj.lowerCaseChars) {
+
+    possibleChars = possibleChars.concat(lowerCasedCharacters)
+    guaranteedChars.push(getRandom(lowerCasedCharacters))
+  }
+
+  if (optionsObj.numberChars) {
+
+    possibleChars = possibleChars.concat(numericCharacters)
+  }
+
+
+
+
+ 
+  for (var i = 0; i < optionsObj.length; i++) {
+    var char = getRandom(possibleChars)
+    passwordResult.push(char)
+  }
+
+  for (var i = 0; i < guaranteedChars.length; i++) {
+    passwordResult[i] = guaranteedChars[i]
+  }
+  return passwordResult.join('')
+
+
 }
 // // Write password to the #password input
 function writePassword() {
@@ -117,3 +168,4 @@ function writePassword() {
 }
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+
