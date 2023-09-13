@@ -96,10 +96,20 @@ function getRandom(arr) {
 function getUserPasswordOptions() {
 
   var passwordLength = prompt("How many characters would you like your password?")
-  console.log(passwordLength)
+  if (Number.isNaN(passwordLength) || passwordLength  < 8 || passwordLength > 128) {
+
+    alert("You must choose a number between 8 - 128!")
+
+    return;
+
+    
+
+  }
+
+   
   var hasSpecialCharacters = confirm("Would you like Special Characters in your password?")
   var hasUpperCaseLetters = confirm("Would you like Upper Case Letters in your password?")
-  var hasLowerCaseLetters = confirm("would you like Lower Case Letters in your password?")
+  var hasLowerCaseLetters = confirm("Would you like Lower Case Letters in your password?")
   var hasNumbers = confirm("Would you like Numbers in your password?")
   var pwdOptions = {
     specialChars: hasSpecialCharacters,
@@ -107,9 +117,10 @@ function getUserPasswordOptions() {
     lowerCaseChars: hasLowerCaseLetters,
     numberChars: hasNumbers,
     length: passwordLength
-
   }
+  console.log(pwdOptions)
   return pwdOptions
+
 }
 
 function generatePassword() {
@@ -145,9 +156,6 @@ function generatePassword() {
   }
 
 
-
-
- 
   for (var i = 0; i < optionsObj.length; i++) {
     var char = getRandom(possibleChars)
     passwordResult.push(char)
